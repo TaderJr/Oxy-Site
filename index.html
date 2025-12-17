@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OXYY Leaderboard</title>
+    <title>OXYY Diceblox Leaderboard</title>
     <style>
         body {
             margin: 0;
@@ -24,11 +24,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('Background.png');
+            background-image: url('Backgroundd.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            opacity: 0.3;
+            opacity: 1;
             z-index: -2;
         }
 
@@ -39,7 +39,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(13, 13, 13, 0.6);
+            background: rgba(13, 13, 13, 0.05);
             z-index: -1;
         }
 
@@ -47,15 +47,15 @@
             position: fixed;
             width: 4px;
             height: 4px;
-            background: #00ff88;
+            background: #d4af37;
             border-radius: 50%;
-            box-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88;
+            box-shadow: 0 0 10px #d4af37, 0 0 20px #d4af37;
             pointer-events: none;
             z-index: 1;
             animation: fly 15s infinite ease-in-out;
         }
 
-        @keyframes fly {
+        @keyframes float {
 
             0%,
             100% {
@@ -64,6 +64,11 @@
             }
 
             10% {
+                opacity: 1;
+            }
+
+            50% {
+                transform: translate(var(--float-x), var(--float-y));
                 opacity: 1;
             }
 
@@ -87,31 +92,78 @@
 
         .brand-container {
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 15px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             position: relative;
         }
 
+        .brand-pfp {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #9b7fd6;
+            box-shadow: 0 0 15px rgba(155, 127, 214, 0.4);
+        }
+
+        .podium-pfp {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            border: 2px solid #9b7fd6;
+            box-shadow: 0 0 10px rgba(155, 127, 214, 0.3);
+        }
+
+        .spot-1 .podium-pfp {
+            border-color: #ffd700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .spot-2 .podium-pfp {
+            border-color: #c0c0c0;
+            box-shadow: 0 0 10px rgba(192, 192, 192, 0.3);
+        }
+
+        .spot-3 .podium-pfp {
+            border-color: #cd7f32;
+            box-shadow: 0 0 10px rgba(205, 127, 50, 0.3);
+        }
+
         .brand-text {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
+            text-align: center;
+        }
+
+        .brand {
+            font-size: 28px;
+            font-weight: 700;
+            color: #d4af37;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+            line-height: 1;
+        }
+
+        .brand-subtitle {
+            font-size: 15px;
+            color: #888;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .countdown {
-            font-size: 18px;
-            color: #00ff88;
+            font-size: 16px;
+            color: #9b7fd6;
+            font-weight: 600;
             margin-top: 10px;
-            text-align: center;
-            font-family: 'Courier New', monospace;
-            font-weight: 700;
+            text-shadow: 0 0 10px rgba(155, 127, 214, 0.3);
             letter-spacing: 1px;
-            width: 100%;
-            display: block;
+        }
+
+        .countdown span {
+            color: #d4af37;
+            font-weight: 700;
         }
 
         .live-badge {
@@ -143,24 +195,7 @@
             }
         }
 
-        .brand-pfp {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 2px solid #00ff88;
-            box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
-        }
-
-        .brand {
-            font-size: 42px;
-            font-weight: 700;
-            color: #00ff88;
-            letter-spacing: 2px;
-            text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
-            text-align: center;
-        }
-
-        .raw-link {
+        .diceblox-link {
             position: fixed;
             top: 20px;
             right: 20px;
@@ -171,37 +206,16 @@
             pointer-events: all;
         }
 
-        .raw-link img {
-            height: 50px;
+        .diceblox-link img {
+            height: 35px;
             width: auto;
             border-radius: 4px;
             display: block;
             pointer-events: all;
         }
 
-        .raw-link:hover {
+        .diceblox-link:hover {
             transform: scale(1.05);
-        }
-
-        .prize-pool {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .prize-pool-label {
-            font-size: 12px;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-
-        .prize-pool-amount {
-            font-size: 42px;
-            font-weight: 800;
-            color: #00ff88;
-            text-shadow: 0 0 25px rgba(0, 255, 136, 0.6), 0 0 50px rgba(0, 255, 136, 0.3);
-            letter-spacing: 2px;
         }
 
         .podium {
@@ -209,34 +223,35 @@
             align-items: flex-end;
             justify-content: center;
             gap: 15px;
-            margin-bottom: 30px;
+            margin-bottom: 50px;
             padding: 20px;
         }
 
         .podium-spot {
-            background: rgba(26, 26, 26, 0.85);
-            border: 1px solid rgba(34, 34, 34, 0.8);
+            background: rgba(26, 26, 46, 0.85);
+            border: 1px solid rgba(155, 127, 214, 0.3);
             border-radius: 6px;
-            padding: 15px;
+            padding: 30px;
             text-align: center;
-            min-width: 140px;
+            min-width: 160px;
             transition: all 0.5s ease;
             backdrop-filter: blur(10px);
         }
 
         .podium-spot:hover {
-            background: rgba(31, 31, 31, 0.9);
+            background: rgba(31, 31, 51, 0.9);
+            border-color: rgba(155, 127, 214, 0.5);
         }
 
         .spot-2 {
-            height: 180px;
+            height: 160px;
             order: 1;
         }
 
         .spot-1 {
-            height: 220px;
+            height: 200px;
             order: 2;
-            border-color: #00ff88;
+            border-color: #d4af37;
             position: relative;
         }
 
@@ -248,45 +263,49 @@
             transform: translateX(-50%);
             width: 30px;
             height: 30px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300ff88'%3E%3Cpath d='M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5m14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffd700'%3E%3Cpath d='M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5m14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z'/%3E%3C/svg%3E");
             background-size: contain;
             background-repeat: no-repeat;
-            filter: drop-shadow(0 0 8px #00ff88) drop-shadow(0 0 12px #00ff88);
+            filter: drop-shadow(0 0 8px #ffd700) drop-shadow(0 0 12px #ffd700);
+        }
+
+        .spot-2::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c0c0c0'%3E%3Cpath d='M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5m14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            filter: drop-shadow(0 0 8px #c0c0c0) drop-shadow(0 0 12px #c0c0c0);
+        }
+
+        .spot-3::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23cd7f32'%3E%3Cpath d='M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5m14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            filter: drop-shadow(0 0 8px #cd7f32) drop-shadow(0 0 12px #cd7f32);
         }
 
         .spot-3 {
-            height: 170px;
+            height: 140px;
             order: 3;
-        }
-
-        .podium-pfp {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin: 0 auto 10px;
-            border: 2px solid #00ff88;
-            box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
-        }
-
-        .spot-1 .podium-pfp {
-            border-color: #ffd700;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-        }
-
-        .spot-2 .podium-pfp {
-            border-color: #c0c0c0;
-            box-shadow: 0 0 10px rgba(192, 192, 192, 0.3);
-        }
-
-        .spot-3 .podium-pfp {
-            border-color: #cd7f32;
-            box-shadow: 0 0 10px rgba(205, 127, 50, 0.3);
         }
 
         .podium-rank {
             font-size: 28px;
             font-weight: 700;
-            color: #00ff88;
+            color: #9b7fd6;
             margin-bottom: 8px;
         }
 
@@ -303,88 +322,75 @@
         }
 
         .podium-player {
-            font-size: 18px;
+            font-size: 15px;
             color: #e0e0e0;
-            margin-bottom: 8px;
-            font-weight: 700;
+            margin-bottom: 5px;
+            font-weight: 600;
         }
 
         .podium-stats {
-            font-size: 14px;
-            color: #666;
+            font-size: 12px;
+            color: #888;
             font-family: 'Courier New', monospace;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
+            gap: 3px;
         }
 
-        .podium-stats img {
-            height: 16px;
-            width: 16px;
+        .robux-icon {
+            width: 12px;
+            height: 12px;
         }
 
         .board {
-            background: rgba(26, 26, 26, 0.85);
+            background: rgba(26, 26, 46, 0.85);
             border-radius: 6px;
-            border: 1px solid rgba(34, 34, 34, 0.8);
-            overflow-x: auto;
+            border: 1px solid rgba(155, 127, 214, 0.3);
+            overflow: hidden;
             margin-bottom: 20px;
             backdrop-filter: blur(10px);
         }
 
         .board-header {
-            background: rgba(21, 21, 21, 0.9);
+            background: rgba(21, 21, 41, 0.9);
             padding: 15px 20px;
-            border-bottom: 1px solid rgba(34, 34, 34, 0.8);
+            border-bottom: 1px solid rgba(155, 127, 214, 0.3);
         }
 
         .board-header h2 {
             margin: 0;
             font-size: 16px;
             font-weight: 600;
-            color: #00ff88;
+            color: #9b7fd6;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            table-layout: fixed;
         }
 
         thead {
-            background: rgba(21, 21, 21, 0.9);
+            background: rgba(21, 21, 41, 0.9);
         }
 
         th {
-            padding: 12px 15px;
+            padding: 12px 20px;
             text-align: left;
             font-size: 12px;
             font-weight: 600;
-            color: #666;
+            color: #888;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         th:first-child {
-            width: 50px;
+            width: 60px;
             text-align: center;
         }
 
-        th:nth-child(2) {
-            width: 30%;
-        }
-
-        th:nth-child(3) {
-            width: 35%;
-        }
-
-        th:nth-child(4) {
-            width: 35%;
-        }
-
         tbody tr {
-            border-bottom: 1px solid #222;
+            border-bottom: 1px solid rgba(155, 127, 214, 0.2);
             transition: all 0.5s ease;
         }
 
@@ -393,60 +399,35 @@
         }
 
         tbody tr:hover {
-            background: rgba(31, 31, 31, 0.6);
+            background: rgba(31, 31, 51, 0.6);
         }
 
         td {
-            padding: 15px 15px;
+            padding: 15px 20px;
             font-size: 14px;
-            vertical-align: middle;
         }
 
         td:first-child {
             text-align: center;
             font-weight: 700;
-            color: #00ff88;
+            color: #9b7fd6;
         }
 
         .player-name {
             color: #e0e0e0;
         }
 
-        tbody tr {
-            border-bottom: 1px solid #222;
-            transition: all 0.5s ease;
-        }
-
-        tbody tr:last-child {
-            border-bottom: none;
-        }
-
-        tbody tr:hover {
-            background: rgba(31, 31, 31, 0.6);
-        }
-
         .stat-val {
-            color: #888;
+            color: #aaa;
             font-family: 'Courier New', monospace;
-            white-space: nowrap;
-        }
-
-        .stat-val img {
-            height: 16px;
-            width: 16px;
-            vertical-align: middle;
-            margin-left: 6px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .prize-val {
-            color: #00ff88;
+            color: #d4af37;
             font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .prize-val img {
-            height: 16px;
-            width: 16px;
         }
 
         .kick-btn {
@@ -455,13 +436,13 @@
             justify-content: center;
             gap: 10px;
             width: 100%;
-            background: rgba(26, 26, 26, 0.85);
+            background: rgba(26, 26, 46, 0.85);
             color: #e0e0e0;
             padding: 15px;
             border-radius: 6px;
             text-decoration: none;
             font-size: 14px;
-            border: 1px solid rgba(34, 34, 34, 0.8);
+            border: 1px solid rgba(155, 127, 214, 0.3);
             text-align: center;
             font-weight: 600;
             transition: 0.2s;
@@ -469,8 +450,8 @@
         }
 
         .kick-btn:hover {
-            background: rgba(34, 34, 34, 0.9);
-            border-color: #00ff88;
+            background: rgba(34, 34, 54, 0.9);
+            border-color: #9b7fd6;
         }
 
         .kick-btn img {
@@ -500,6 +481,7 @@
             }
         }
 
+        /* Rocket Styles */
         @keyframes rocketLaunch {
             0% {
                 left: 10%;
@@ -539,14 +521,14 @@
             pointer-events: none;
             z-index: 0;
             animation: rocketLaunch 12s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
-            filter: drop-shadow(0 0 30px rgba(0, 255, 136, 0.8));
+            filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.8));
         }
 
-        .raw-coin img {
+        .robux-coin {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.8));
+            filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.8));
         }
 
         @keyframes coinFloat {
@@ -565,7 +547,7 @@
             }
         }
 
-        .raw-coin {
+        .robux-coin-trail {
             position: fixed;
             pointer-events: none;
             z-index: 2;
@@ -578,13 +560,13 @@
 <body>
     <div class="wrapper">
         <div class="header">
-            <a href="https://raw365.gg/r?code=OXYY" target="_blank" rel="noopener noreferrer" class="raw-link">
-                <img src="RAW.png" alt="RAW365" draggable="false">
+            <a href="https://diceblox.com/r/OXYY" target="_blank" rel="noopener noreferrer" class="diceblox-link">
+                <img src="DIcebloxLLOGO.png" alt="Diceblox" draggable="false">
             </a>
             <div class="brand-container">
                 <img src="OXY.webp" alt="OXYY" class="brand-pfp">
                 <div class="brand-text">
-                    <div class="brand">OXYY's $<span id="prizePool">1,000</span> LEADERBOARD</div>
+                    <div class="brand">OXYY's LEADERBOARD</div>
                     <div class="countdown" id="countdown">Loading...</div>
                 </div>
                 <span class="live-badge" id="liveBadge" style="display: none;">● LIVE</span>
@@ -594,39 +576,24 @@
         <div class="podium">
             <div class="podium-spot spot-2">
                 <div class="podium-rank">#2</div>
-                <img src="" alt="" class="podium-pfp" id="podium-pfp-2">
+                <img src="" alt="" class="podium-pfp" id="podium-pfp-2" style="display: none;">
                 <div class="podium-player">undefined</div>
-                <div class="podium-stats">
-                    <span>0 wagered</span>
-                    <img src="raw.webp" alt="RAW">
-                </div>
-                <div class="podium-stats" style="color: #00ff88; margin-top: 5px; font-weight: 600;">
-                    <span>NULL</span>
-                </div>
+                <div class="podium-stats"><img src="Robuxx.png" class="robux-icon"> <span>0 wagered</span></div>
+                <div class="podium-stats" style="color: #666; margin-top: 5px;">NULL</div>
             </div>
             <div class="podium-spot spot-1">
                 <div class="podium-rank">#1</div>
-                <img src="" alt="" class="podium-pfp" id="podium-pfp-1">
+                <img src="" alt="" class="podium-pfp" id="podium-pfp-1" style="display: none;">
                 <div class="podium-player">undefined</div>
-                <div class="podium-stats">
-                    <span>0 wagered</span>
-                    <img src="raw.webp" alt="RAW">
-                </div>
-                <div class="podium-stats" style="color: #00ff88; margin-top: 5px; font-weight: 600;">
-                    <span>NULL</span>
-                </div>
+                <div class="podium-stats"><img src="Robuxx.png" class="robux-icon"> <span>0 wagered</span></div>
+                <div class="podium-stats" style="color: #666; margin-top: 5px;">NULL</div>
             </div>
             <div class="podium-spot spot-3">
                 <div class="podium-rank">#3</div>
-                <img src="" alt="" class="podium-pfp" id="podium-pfp-3">
+                <img src="" alt="" class="podium-pfp" id="podium-pfp-3" style="display: none;">
                 <div class="podium-player">undefined</div>
-                <div class="podium-stats">
-                    <span>0 wagered</span>
-                    <img src="raw.webp" alt="RAW">
-                </div>
-                <div class="podium-stats" style="color: #00ff88; margin-top: 5px; font-weight: 600;">
-                    <span>NULL</span>
-                </div>
+                <div class="podium-stats"><img src="Robuxx.png" class="robux-icon"> <span>0 wagered</span></div>
+                <div class="podium-stats" style="color: #666; margin-top: 5px;">NULL</div>
             </div>
         </div>
 
@@ -656,27 +623,40 @@
 
     <script>
         // ===== CONFIGURATION =====
-        const LEADERBOARD_END_DATE = new Date('2025-11-10T00:00:00.000Z'); // Ends next Monday
-
-
-        const endDate = new Date();
-        const startDate = new Date();
-        startDate.setDate(startDate.getDate() - 7);
-
-        const API_ENDPOINT_BASE = `https://api.raw365.gg/v2/affiliate-api/leaderboard?apiKey=8719fc70-de47-43fa-bca6-9bc52694d036&start=${startDate.toISOString()}&end=${endDate.toISOString()}`;
-        const API_ENDPOINT = `https://api.allorigins.win/raw?url=${encodeURIComponent(API_ENDPOINT_BASE)}`;
-
+        const API_KEY = '379320c8073f38d881867b5008f484f6d69565c40c9ecd26d3';
+        const AFFILIATE_ID = '175015';
         const CHECK_LIVE_STATUS = true;
         const KICK_CHANNEL = 'iamtheoxyman';
+
+        const startDate = new Date(2025, 11, 16, 0, 0, 0, 0);
+
+
+
+        // Set countdown to 1 week from today
+        const endDate = new Date(startDate);
+        endDate.setDate(endDate.getDate() + 7);
+        endDate.setHours(23, 59, 59, 999);
+        const COUNTDOWN_END = endDate.toISOString().slice(0, 19).replace('T', ' ');
+
+        const API_ENDPOINT_BASE = `https://api.diceblox.com/affiliates/${startDate.toISOString()}`;
+
+        console.log('Start date:', startDate.toISOString());
+        console.log('End date:', endDate.toISOString());
+        console.log('API endpoint:', API_ENDPOINT_BASE);
         // ========================
 
-        // Countdown Timer
         function updateCountdown() {
             const now = new Date().getTime();
-            const distance = LEADERBOARD_END_DATE.getTime() - now;
+            const end = new Date(COUNTDOWN_END).getTime();
+            const distance = end - now;
 
             if (distance < 0) {
-                document.getElementById('countdown').textContent = 'Leaderboard Ended';
+                document.getElementById('countdown').textContent = 'ENDED';
+                // Save JSON when competition ends
+                if (!window.leaderboardSaved) {
+                    saveLeaderboardJSON();
+                    window.leaderboardSaved = true;
+                }
                 return;
             }
 
@@ -685,57 +665,86 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById('countdown').textContent =
-                `Ends in: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+            document.getElementById('countdown').innerHTML =
+                `<span>${days}</span> DAYS <span>${String(hours).padStart(2, '0')}</span> HOURS <span>${String(minutes).padStart(2, '0')}</span> MINUTES <span>${String(seconds).padStart(2, '0')}</span> SECONDS LEFT`;
+        }
+        // Save leaderboard data to JSON file
+        function saveLeaderboardJSON() {
+            const leaderboardData = {
+                competition_end: COUNTDOWN_END,
+                final_standings: data,
+                total_prize_pool: '$500',
+                saved_at: new Date().toISOString()
+            };
+
+            const jsonString = JSON.stringify(leaderboardData, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `oxyy-leaderboard-final-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            console.log('Leaderboard saved to JSON file');
         }
 
-        // Update countdown every second
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-
-        // create fireflies
-        for (let i = 0; i < 20; i++) {
+        // create fireflies (yellow glowing dots like second script)
+        function createFirefly(delay = 0) {
             const firefly = document.createElement('div');
             firefly.className = 'firefly';
 
+            // Random starting position
             const startX = Math.random() * window.innerWidth;
             const startY = Math.random() * window.innerHeight;
-            const endX = Math.random() * window.innerWidth;
-            const endY = Math.random() * window.innerHeight;
-            const delay = Math.random() * 15;
-            const duration = 10 + Math.random() * 10;
+
+            // Random gentle float movement
+            const floatX = (Math.random() - 0.5) * 2000;
+            const floatY = (Math.random() - 0.5) * 2000;
+            const duration = 8 + Math.random() * 6;
 
             firefly.style.left = startX + 'px';
             firefly.style.top = startY + 'px';
-            firefly.style.animation = `fly ${duration}s infinite ease-in-out`;
-            firefly.style.animationDelay = delay + 's';
+            firefly.style.setProperty('--float-x', floatX + 'px');
+            firefly.style.setProperty('--float-y', floatY + 'px');
 
+            // Create unique keyframes for each firefly
             const keyframes = `
-                @keyframes fly${i} {
-                    0%, 100% {
-                        transform: translate(0, 0);
-                        opacity: 0;
-                    }
-                    10% {
-                        opacity: 1;
-                    }
-                    50% {
-                        transform: translate(${endX - startX}px, ${endY - startY}px);
-                    }
-                    90% {
-                        opacity: 1;
-                    }
-                }
-            `;
+    @keyframes fly${Math.random().toString(36).substr(2, 9)} {
+        0%, 100% {
+            transform: translate(0, 0);
+            opacity: 0;
+        }
+        10% { opacity: 1; }
+        50% {
+            transform: translate(${floatX}px, ${floatY}px);
+        }
+        90% { opacity: 1; }
+    }
+`;
 
             const style = document.createElement('style');
             style.innerHTML = keyframes;
             document.head.appendChild(style);
-            firefly.style.animation = `fly${i} ${duration}s infinite ease-in-out ${delay}s`;
+            firefly.style.animation = `${keyframes.match(/@keyframes ([^\s]+)/)[1]} ${duration}s infinite ease-in-out ${delay}s`;
 
             document.body.appendChild(firefly);
+
+            // When animation ends, remove and create new one
+            setTimeout(() => {
+                firefly.remove();
+                createFirefly(0);
+            }, (duration + delay) * 1000);
         }
 
+        // Create initial fireflies
+        for (let i = 0; i < 8; i++) {
+            createFirefly(Math.random() * 10);
+        }
+        // Create SVG Rocket with yellow/gold colors
         function createRocketSVG() {
             const rocket = document.createElement('div');
             rocket.className = 'rocket';
@@ -746,13 +755,13 @@
             svg.setAttribute('width', '100%');
             svg.setAttribute('height', '100%');
 
-            // Simple rocket body (smooth capsule)
+            // Simple rocket body (smooth capsule) - Gold/Yellow
             const body = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
             body.setAttribute('x', '35');
             body.setAttribute('y', '30');
             body.setAttribute('width', '30');
             body.setAttribute('height', '75');
-            body.setAttribute('fill', '#00ff88');
+            body.setAttribute('fill', '#d4af37');
             body.setAttribute('rx', '15');
             body.setAttribute('ry', '15');
 
@@ -762,24 +771,24 @@
             nose.setAttribute('cy', '30');
             nose.setAttribute('rx', '15');
             nose.setAttribute('ry', '25');
-            nose.setAttribute('fill', '#00ff88');
+            nose.setAttribute('fill', '#d4af37');
 
             // Left fin (simple triangle)
             const finLeft = document.createElementNS('http://www.w3.org/2000/svg', 'path');
             finLeft.setAttribute('d', 'M35 85 L20 115 L35 110 Z');
-            finLeft.setAttribute('fill', '#00ff88');
+            finLeft.setAttribute('fill', '#d4af37');
 
             // Right fin (simple triangle)
             const finRight = document.createElementNS('http://www.w3.org/2000/svg', 'path');
             finRight.setAttribute('d', 'M65 85 L80 115 L65 110 Z');
-            finRight.setAttribute('fill', '#00ff88');
+            finRight.setAttribute('fill', '#d4af37');
 
-            // Simple window (darker green circle)
+            // Simple window (darker gold circle)
             const window1 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
             window1.setAttribute('cx', '50');
             window1.setAttribute('cy', '60');
             window1.setAttribute('r', '8');
-            window1.setAttribute('fill', '#008855');
+            window1.setAttribute('fill', '#9b7f32');
             window1.setAttribute('opacity', '0.6');
 
             // Glow filter
@@ -816,9 +825,11 @@
 
             return rocket;
         }
-        function createRawCoinFromBottom(x, y) {
+
+        // Create Robux coin emission from bottom of rocket
+        function createRobuxCoinFromBottom(x, y) {
             const coin = document.createElement('div');
-            coin.className = 'raw-coin';
+            coin.className = 'robux-coin-trail';
 
             const size = 25 + Math.random() * 35;
             coin.style.width = size + 'px';
@@ -837,8 +848,9 @@
             coin.style.top = (y + offsetY) + 'px';
 
             const img = document.createElement('img');
-            img.src = 'raw.webp';
-            img.alt = 'RAW';
+            img.src = 'Robuxx.png';
+            img.alt = 'Robux';
+            img.className = 'robux-coin';
             coin.appendChild(img);
 
             document.body.appendChild(coin);
@@ -848,6 +860,7 @@
             }, 3500);
         }
 
+        // Emit coins from rocket
         function emitCoins() {
             const rocket = document.getElementById('mainRocket');
             if (!rocket) return;
@@ -859,13 +872,15 @@
             const numCoins = 1 + Math.floor(Math.random() * 3);
             for (let i = 0; i < numCoins; i++) {
                 setTimeout(() => {
-                    createRawCoinFromBottom(centerX, bottomY);
+                    createRobuxCoinFromBottom(centerX, bottomY);
                 }, i * 30 + Math.random() * 40);
             }
         }
 
+        // Create the rocket
         const rocketElement = createRocketSVG();
 
+        // Schedule coin emissions
         function scheduleNextCoinEmission() {
             const delay = 150 + Math.random() * 300;
             setTimeout(() => {
@@ -877,22 +892,47 @@
         scheduleNextCoinEmission();
 
         let data = [
-            { rank: 1, player: 'undefined', wagered: 0, prize: 'NULL', photo: '' },
-            { rank: 2, player: 'undefined', wagered: 0, prize: 'NULL', photo: '' },
-            { rank: 3, player: 'undefined', wagered: 0, prize: 'NULL', photo: '' },
-            { rank: 4, player: 'undefined', wagered: 0, prize: 'NULL', photo: '' },
-            { rank: 5, player: 'undefined', wagered: 0, prize: 'NULL', photo: '' },
-            { rank: 6, player: 'undefined', wagered: 0, prize: 'NULL', photo: '' },
-            { rank: 7, player: 'undefined', wagered: 0, prize: 'NULL', photo: '' },
-            { rank: 8, player: 'undefined', wagered: 0, prize: 'NULL', photo: '' },
-            { rank: 9, player: 'undefined', wagered: 0, prize: 'NULL', photo: '' },
-            { rank: 10, player: 'undefined', wagered: 0, prize: 'NULL', photo: '' }
+            { rank: 1, player: 'undefined', wagered: 0, prize: '$200', photo: '' },
+            { rank: 2, player: 'undefined', wagered: 0, prize: '$130', photo: '' },
+            { rank: 3, player: 'undefined', wagered: 0, prize: '$85', photo: '' },
+            { rank: 4, player: 'undefined', wagered: 0, prize: '$55' },
+            { rank: 5, player: 'undefined', wagered: 0, prize: '$30' },
+            { rank: 6, player: 'undefined', wagered: 0, prize: 'NULL' },
+            { rank: 7, player: 'undefined', wagered: 0, prize: 'NULL' },
+            { rank: 8, player: 'undefined', wagered: 0, prize: 'NULL' },
+            { rank: 9, player: 'undefined', wagered: 0, prize: 'NULL' },
+            { rank: 10, player: 'undefined', wagered: 0, prize: 'NULL' }
         ];
-
-        let totalPrizePool = 0;
 
         function formatNum(n) {
             return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
+        function animatePrizePool(target) {
+            const element = document.getElementById('prizePool');
+            if (!element) return;
+
+            const duration = 2000;
+            const start = 0;
+            const startTime = Date.now();
+
+            function update() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                const current = Math.floor(start + (target - start) * easeOut);
+
+                element.textContent = formatNum(current);
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    element.textContent = formatNum(target);
+                }
+            }
+
+            update();
         }
 
         function updatePodium() {
@@ -911,12 +951,14 @@
                         pfp.style.display = 'block';
                     }
                     spot.el.querySelector('.podium-player').textContent = d.player;
-                    spot.el.querySelector('.podium-stats span').textContent = `${formatNum(d.wagered)} wagered`;
-                    spot.el.querySelectorAll('.podium-stats')[1].textContent = `$${d.prize}`;
+                    const statsSpan = spot.el.querySelector('.podium-stats span');
+                    if (statsSpan) {
+                        statsSpan.textContent = `${formatNum(d.wagered)} wagered`;
+                    }
+                    spot.el.querySelectorAll('.podium-stats')[1].textContent = d.prize;
                 }
             });
         }
-
         function render() {
             const tbody = document.getElementById('tbody');
             tbody.innerHTML = '';
@@ -927,11 +969,11 @@
                 tr.style.transform = 'translateY(-10px)';
 
                 tr.innerHTML = `
-            <td>${d.rank}</td>
-            <td class="player-name">${d.player}</td>
-            <td class="stat-val">${formatNum(d.wagered)} <img src="raw.webp" alt="RAW"></td>
-            <td class="prize-val">$${d.prize}</td>
-        `;
+                    <td>${d.rank}</td>
+                    <td class="player-name">${d.player}</td>
+                    <td class="stat-val"><img src="Robuxx.png" style="width: 14px; height: 14px;"> ${formatNum(d.wagered)}</td>
+                    <td class="prize-val">${d.prize}</td>
+                `;
 
                 tbody.appendChild(tr);
 
@@ -944,86 +986,163 @@
 
             updatePodium();
         }
+
         async function checkLiveStatus() {
             if (!CHECK_LIVE_STATUS) return;
 
             try {
                 const liveBadge = document.getElementById('liveBadge');
-                // Placeholder for live detection
+                // liveBadge.style.display = 'block'; // Uncomment when you have live detection
             } catch (error) {
-
+                console.error('Error checking live status:', error);
             }
-        }
-
-        function calculatePrize(rank, total) {
-            const prizeDistribution = {
-                1: 0.40,
-                2: 0.25,
-                3: 0.15,
-                4: 0.10,
-                5: 0.05,
-                6: 0.03,
-                7: 0.01,
-                8: 0.005,
-                9: 0.003,
-                10: 0.002
-            };
-
-            const percentage = prizeDistribution[rank] || 0;
-            const prize = Math.round(total * percentage);
-            return prize > 0 ? formatNum(prize) : 'NULL';
         }
 
         async function fetchData() {
             try {
-                const response = await fetch(API_ENDPOINT);
+                console.log('Fetching from:', API_ENDPOINT_BASE);
 
-                if (!response.ok) {
-                    throw new Error(`API Error: ${response.status}`);
-                }
+                // Try multiple CORS proxies as fallbacks
+                const proxies = [
+                    `https://api.allorigins.win/raw?url=${encodeURIComponent(API_ENDPOINT_BASE)}`,
+                    `https://corsproxy.io/?${encodeURIComponent(API_ENDPOINT_BASE)}`,
+                    API_ENDPOINT_BASE // Direct attempt (will fail but good to try)
+                ];
 
-                const json = await response.json();
+                let response = null;
+                let lastError = null;
 
-                if (json && json.results && Array.isArray(json.results)) {
-                    totalPrizePool = 1000;
-
-                    data = json.results.slice(0, 10).map((entry, index) => ({
-                        rank: index + 1,
-                        player: entry.username || 'unknown',
-                        wagered: Math.round(parseFloat(entry.wager) || 0),
-                        prize: calculatePrize(index + 1, totalPrizePool),
-                        photo: entry.photo || ''
-                    }));
-
-                    while (data.length < 10) {
-                        data.push({
-                            rank: data.length + 1,
-                            player: 'undefined',
-                            wagered: 0,
-                            prize: 'NULL',
-                            photo: ''
+                for (const proxyUrl of proxies) {
+                    try {
+                        console.log('Trying:', proxyUrl);
+                        response = await fetch(proxyUrl, {
+                            headers: {
+                                'Authorization': API_KEY
+                            }
                         });
-                    }
 
-                    render();
+                        if (response.ok) {
+                            console.log('Success with:', proxyUrl);
+                            break;
+                        }
+                    } catch (e) {
+                        console.log('Failed with', proxyUrl, ':', e.message);
+                        lastError = e;
+                        continue;
+                    }
                 }
 
+                if (!response || !response.ok) {
+                    throw lastError || new Error('All proxy attempts failed');
+                }
+
+                const text = await response.text();
+                console.log('Raw response:', text.substring(0, 500));
+
+                let json;
+                try {
+                    json = JSON.parse(text);
+                } catch (e) {
+                    console.error('Failed to parse JSON:', e);
+                    console.error('Response was:', text);
+                    throw e;
+                }
+
+                console.log('Parsed API Response:', json);
+                console.log('Response type:', typeof json);
+                console.log('Is array?', Array.isArray(json));
+                if (json && typeof json === 'object') {
+                    console.log('Keys:', Object.keys(json));
+                }
+
+                const prizes = ['$200', '$130', '$85', '$55', '$30', 'NULL', 'NULL', 'NULL', 'NULL', 'NULL'];
+
+                // Handle if response is directly an array
+                if (Array.isArray(json)) {
+                    console.log('Response is array with', json.length, 'items');
+                    if (json.length > 0) {
+                        console.log('First item:', json[0]);
+                        // Sort by wagered amount descending
+                        const sorted = json.sort((a, b) => {
+                            const aWager = a.totalWagered || a.wagered || a.amount || 0;
+                            const bWager = b.totalWagered || b.wagered || b.amount || 0;
+                            return bWager - aWager;
+                        });
+
+                        data = sorted.slice(0, 10).map((entry, index) => ({
+                            rank: index + 1,
+                            player: entry.username || entry.name || entry.player || 'unknown',
+                            wagered: Math.round(entry.totalWagered || entry.wagered || entry.amount || 0),
+                            prize: prizes[index],
+                            photo: entry.photo || entry.avatar || entry.profilePicture || ''
+                        }));
+                    } else {
+                        console.log('Array is empty - no leaderboard data yet');
+                    }
+                }
+                // Handle if response has leaderboard property
+                else if (json && json.leaderboard && Array.isArray(json.leaderboard)) {
+                    console.log('Found leaderboard property with', json.leaderboard.length, 'items');
+                    // Sort by wagered amount descending
+                    const sorted = json.leaderboard.sort((a, b) => {
+                        const aWager = a.totalWagered || a.wagered || 0;
+                        const bWager = b.totalWagered || b.wagered || 0;
+                        return bWager - aWager;
+                    });
+
+                    data = sorted.slice(0, 10).map((entry, index) => ({
+                        rank: index + 1,
+                        player: entry.username || entry.name || entry.player || 'unknown',
+                        wagered: Math.round(entry.totalWagered || entry.wagered || entry.amount || 0),
+                        prize: prizes[index],
+                        photo: entry.photo || entry.avatar || entry.profilePicture || ''
+                    }));
+                }
+                // Handle if response has an error
+                else if (json && json.error) {
+                    console.error('API returned error:', json.error);
+                }
+
+                // Fill remaining slots if less than 10
+                while (data.length < 10) {
+                    data.push({
+                        rank: data.length + 1,
+                        player: 'undefined',
+                        wagered: 0,
+                        prize: prizes[data.length]
+                    });
+                }
+
+                // Update prize pool if available
+                if (json && json.prizePool !== undefined) {
+                    const totalPrizePool = Math.round(json.prizePool);
+                    animatePrizePool(totalPrizePool);
+                }
+
+                render();
             } catch (error) {
-                // Silent error - don't reveal anything
+                console.error('Error fetching leaderboard data:', error);
+                console.log('Note: CORS issues are common. You may need to run this from a server or use a backend proxy.');
             }
         }
-        // Initial render with default data
+
+        // Initial render
         render();
         checkLiveStatus();
 
-        // Fetch real data immediately
-        fetchData();
+        updateCountdown();
+
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
 
         // Auto-refresh every 30 seconds
         setInterval(() => {
             fetchData();
             checkLiveStatus();
         }, 30000);
+
+        // Fetch data on page load
+        fetchData();
     </script>
 </body>
 
