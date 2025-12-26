@@ -628,7 +628,7 @@
         const CHECK_LIVE_STATUS = true;
         const KICK_CHANNEL = 'iamtheoxyman';
 
-        const startDate = new Date(2025, 11, 16, 0, 0, 0, 0);
+       const startDate = new Date(2025, 11, 25, 20, 0, 0, 0); // Dec 25, 8PM EST
 
 
 
@@ -645,29 +645,30 @@
         console.log('API endpoint:', API_ENDPOINT_BASE);
         // ========================
 
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const end = new Date(COUNTDOWN_END).getTime();
-            const distance = end - now;
+function updateCountdown() {
+    const now = new Date().getTime();
+    const end = new Date(COUNTDOWN_END).getTime();
+    const distance = end - now;
 
-            if (distance < 0) {
-                document.getElementById('countdown').textContent = 'ENDED';
-                // Save JSON when competition ends
-                if (!window.leaderboardSaved) {
-                    saveLeaderboardJSON();
-                    window.leaderboardSaved = true;
-                }
-                return;
-            }
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById('countdown').innerHTML =
-                `<span>${days}</span> DAYS <span>${String(hours).padStart(2, '0')}</span> HOURS <span>${String(minutes).padStart(2, '0')}</span> MINUTES <span>${String(seconds).padStart(2, '0')}</span> SECONDS LEFT`;
+    if (distance < 0) {
+        document.getElementById('countdown').innerHTML = '<span style="color: #ff4444;">COMPETITION ENDED</span>';
+        // Stop fetching new data when ended
+        if (!window.competitionEnded) {
+            window.competitionEnded = true;
+            clearInterval(window.autoRefreshInterval);
+            console.log('Competition ended - leaderboard frozen');
         }
+        return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById('countdown').innerHTML =
+        `<span>${days}</span> DAYS <span>${String(hours).padStart(2, '0')}</span> HOURS <span>${String(minutes).padStart(2, '0')}</span> MINUTES <span>${String(seconds).padStart(2, '0')}</span> SECONDS LEFT`;
+}
         // Save leaderboard data to JSON file
         function saveLeaderboardJSON() {
             const leaderboardData = {
@@ -1135,11 +1136,14 @@
         // Update countdown every second
         setInterval(updateCountdown, 1000);
 
-        // Auto-refresh every 30 seconds
-        setInterval(() => {
-            fetchData();
-            checkLiveStatus();
-        }, 30000);
+    
+      // Auto-refresh every 30 seconds (but stop when competition ends)
+window.autoRefreshInterval = setInterval(() => {
+    if (!window.competitionEnded) {
+        fetchData();
+        checkLiveStatus();
+    }
+}, 30000);
 
         // Fetch data on page load
         fetchData();
