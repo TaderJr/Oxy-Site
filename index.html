@@ -893,16 +893,16 @@ function updateCountdown() {
         scheduleNextCoinEmission();
 
         let data = [
-            { rank: 1, player: 'undefined', wagered: 0, prize: '$200', photo: '' },
-            { rank: 2, player: 'undefined', wagered: 0, prize: '$130', photo: '' },
-            { rank: 3, player: 'undefined', wagered: 0, prize: '$85', photo: '' },
+            { rank: 1, player: 'undefined', wagered: 0, prize: '$300', photo: '' },
+            { rank: 2, player: 'undefined', wagered: 0, prize: '$150', photo: '' },
+            { rank: 3, player: 'undefined', wagered: 0, prize: '$100', photo: '' },
             { rank: 4, player: 'undefined', wagered: 0, prize: '$55' },
-            { rank: 5, player: 'undefined', wagered: 0, prize: '$30' },
-            { rank: 6, player: 'undefined', wagered: 0, prize: 'NULL' },
-            { rank: 7, player: 'undefined', wagered: 0, prize: 'NULL' },
-            { rank: 8, player: 'undefined', wagered: 0, prize: 'NULL' },
-            { rank: 9, player: 'undefined', wagered: 0, prize: 'NULL' },
-            { rank: 10, player: 'undefined', wagered: 0, prize: 'NULL' }
+            { rank: 5, player: 'undefined', wagered: 0, prize: '$45' },
+            { rank: 6, player: 'undefined', wagered: 0, prize: '$30L' },
+            { rank: 7, player: 'undefined', wagered: 0, prize: '$25' },
+            { rank: 8, player: 'undefined', wagered: 0, prize: '$20' },
+            { rank: 9, player: 'undefined', wagered: 0, prize: '$15' },
+            { rank: 10, player: 'undefined', wagered: 0, prize: '$10' }
         ];
 
         function formatNum(n) {
@@ -1056,7 +1056,8 @@ function updateCountdown() {
                     console.log('Keys:', Object.keys(json));
                 }
 
-                const prizes = ['$200', '$130', '$85', '$55', '$30', 'NULL', 'NULL', 'NULL', 'NULL', 'NULL'];
+               const prizes = ['$300', '$150', '$100', '$55', '$45', '$30', '$25', '$20', '$15', '$10'];
+
 
                 // Handle if response is directly an array
                 if (Array.isArray(json)) {
@@ -1151,4 +1152,5 @@ window.autoRefreshInterval = setInterval(() => {
 </body>
 
 </html>
+
 
