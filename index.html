@@ -628,15 +628,15 @@
         const CHECK_LIVE_STATUS = true;
         const KICK_CHANNEL = 'iamtheoxyman';
         
-      const startDate = new Date(2026, 0, 2, 0, 0, 0, 0);
+     // Leaderboard starts Jan 11 and ends Jan 18
+const startDate = new Date(2026, 0, 11, 0, 0, 0);
+const endDate = new Date(2026, 0, 18, 23, 59, 59, 999);
 
+const COUNTDOWN_END = endDate
+  .toISOString()
+  .slice(0, 19)
+  .replace('T', ' ');
 
-
-        // Set countdown to 1 week from today
-        const endDate = new Date(startDate);
-        endDate.setDate(endDate.getDate() + 7);
-        endDate.setHours(23, 59, 59, 999);
-        const COUNTDOWN_END = endDate.toISOString().slice(0, 19).replace('T', ' ');
 
         const API_ENDPOINT_BASE = `https://api.diceblox.com/affiliates/${startDate.toISOString()}`;
 
@@ -1152,5 +1152,6 @@ window.autoRefreshInterval = setInterval(() => {
 </body>
 
 </html>
+
 
 
